@@ -74,6 +74,25 @@ Alternatively, from a terminal in the root folder of the project, you can also c
 
 To run the tests for the database components, these are in the folder 'tests_db', so you can call 'python -m pytest tests_db' to run them from the command line.
 
+
+## Collaboration
+
+Made in collaboration with [NachoToast](https://github.com/NachoToast/) in a locked repository. Permission was granted to have this repository public.
+
+
+## Images
+
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134375680080097400/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134375680080097400/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134375888092405880/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134375888092405880/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134375941930504363/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134375941930504363/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134376204959502336/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134376204959502336/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134376633806098472/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134376633806098472/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134376167219154944/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134376167219154944/image.png"></a>
+<a href="https://media.discordapp.net/attachments/590667063165583409/1134376429728047155/image.png" target="_blank" rel="noreferrer noopener"><img width="400" src="https://media.discordapp.net/attachments/590667063165583409/1134376429728047155/image.png"></a>
+
+
+
+
 ## Data sources
 
 The data files are modified excerpts downloaded from:
@@ -87,6 +106,3 @@ Defferrard, M., Benzi, K., Vandergheynst, P., & Bresson, X. (2017). FMA: A Datas
 Defferrard, M., Mohanty, S., Carroll, S., & Salathe, M. (2018). Learning to Recognize Musical Genre from Audio. In The 2018 Web Conference Companion. ACM Press.
 
 
-## Collaboration
-
-Made in collaboration with [NachoToast](https://github.com/NachoToast/) in a locked repository. Permission was granted to have this repository public.
