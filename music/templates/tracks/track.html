@@ -1,0 +1,100 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id = "track">
+    <audio loop id="song" hidden src="{{ track.track_file }}" type="audio/mpeg"></audio>
+        <div class="track-header">
+
+            <img src = "{{ track.image_file }}" onerror="this.src='../static/iconClear.png';this.onerror='';" alt = "Album Cover" class = "albumCover" id="albumCoverTrackpage">
+            <div class="track-header-text">
+                <div class="trackTitle">
+                    {{ track.title }}                   
+                    <button class="playButton" id="playSong">
+                        <img src="{{ url_for('static', filename='toplay.png')}}" id="playingbutton" >
+                    </button>
+                </div>
+                <div class="trackAuthor">By <a href="/track/artist/{{track.artist.artist_id}}"><span id="white">{{ track.artist.full_name }}</span></a></div>
+                <div class="track-header-info">
+                    <div class="trackDuration">Duration: <span id="white">{{ track.track_duration_minutes }}</span></div>
+                    <div class = "breaker"> • </div>
+                    <div class="trackAlbum">Album: <a href="/track/album/{{track.album.album_id}}">{{ track.album.title }}</a></div>
+                    <div class = "breaker"> • </div>
+                    <a href="/track/genre/{{track.genres[0].genre_id}}" class="trackGenre">Genre: <span id="white">{{ track.genres[0].name }}</span></a>
+                </div>
+            </div>
+        </div>
+</div>
+<div id = "trackExtras">
+    <span id="recommendations">If you like {{ track.title }}, check out:</span>
+    <div id="trackRecs">
+    {% for recommendation in recommended_tracks|shuffle %}
+        {% if loop.index <= 10 %}
+        <!-- <p>{{recommendation.title}}</p> -->
+            <a href="/track/{{ recommendation.track_id }}" id="testing2">
+            <div class="recommendation">
+                <figure>
+                    <img src="{{recommendation.image_file}}" onerror="this.src='../static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class="recommendedImage">
+                    <figcaption>{{recommendation.title}}</figcaption>
+                </figure>
+            </div>
+            </a>
+        {% endif %}
+
+    {%endfor%}
+    </div>
+</div>
+
+{% if existing_review %}
+<div class="track-reviews">
+    <span id="recommendations">Your Review</span>
+    <div class="track-reviews-list-personal">
+        <div class="songReview">
+            <span id="authorName">By: {{ existing_review.author_name }} • </span>
+            <span id="rating" class="reviewStarsReadOnly" rating="{{ existing_review.rating }}"></span>
+            <br><br>
+            <span id="revText">{{ existing_review.review_text }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="track-reviews">
+    <!-- Button to leave review -->
+    <div class="reviewTop">
+        <span id="recommendations">Reviews ({{ reviews|length }}) •</span>
+        <a href="/track/{{ track.track_id }}/review" id="leaveReview">Leave a Review</a>
+    </div>
+    
+    <div class="track-reviews-list">
+        {% for review in reviews %}
+        <div class="track-reviews-list-personal">
+            <div class="songReview">
+                <span id="authorName">By: {{ review.author_name }} • </span>
+                <span id="rating" class="reviewStarsReadOnly" rating="{{ review.rating }}"></span>
+                <br><br>
+                <span id="revText">{{ review.review_text }}</span>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+
+<script> // This is the script that makes the play button work and the logo start dancing.
+    document.getElementById("playSong").addEventListener("click", function(){
+      var audio = document.getElementById('song');
+      var headerLogo = document.getElementById('logo')
+      if(this.className == 'playing'){
+          this.className = "paused";
+          this.innerHTML = `<img src="{{ url_for('static', filename='toplay.png')}}" >`
+          audio.pause();
+          headerLogo.src = "{{ url_for('static', filename='kirb.png')}}"
+      }else{
+          this.className = "playing";
+          this.innerHTML = `<img src="{{ url_for('static', filename='topause.png')}}" >`
+          audio.play();
+          headerLogo.src = "{{ url_for('static', filename='kirb.gif')}}"
+      }
+    });
+  </script>
+
+{% endblock %}

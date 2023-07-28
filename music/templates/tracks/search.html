@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="searchPage">
+
+    <div class="searchPage_header">
+        <h1>Advanced Search</h1>
+        <form action="{{ handler_url }}" method="POST" id="searchForm">
+            {{form.article_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+            {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+            
+            <select name="genre" class="dropDwn">
+                <option value="none" selected disabled hidden>Genre</option>
+                {% for genre in genres %}
+                    <option value="{{genre}}">{{genre}}</option>
+                {% endfor %} 
+            </select>
+            <input type="text" name="artist" placeholder="Artist" class="searchPage__input">
+            <input type="text" name="album" placeholder="Album" class="searchPage__input">
+            <br>
+            <div class="bottomSearch">
+                <span id="fuzSearch">
+                    <input type="checkbox" name="fuzzy_search">
+                    <label for="fuzzy_search" class="fuzCheck">Fuzzy Search</label>
+                </span>
+                <input type="text" name="title" placeholder="Title" class="searchPage__input, textInput">
+                <input type="submit" id="searchSubmit" value="Search">
+            </div>
+        </form>
+    </div>
+
+        {% if results and results|length != total_results %}
+        <h1>Showing {{results|length}} / {{total_results}} Results</h1>
+        {% elif results %}
+        <h1>{{results|length}} Results</h1>
+        {% endif %}
+
+        {% if results %}
+            <br>
+            <div class="sortBar">
+                <a href="#" id="title">Title</a>
+                <a href="#" id="artist">Artist</a>
+                <a href="#" id="album">Album</a>
+                <a href="#" id="duration">Duration</a>
+            </div>
+            {% for result in results %}
+                <div class = "songListing" style="width:calc(100% - 20px)">
+                    <img src = "{{ result.image_file }}" loading="lazy" onerror="this.src='static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class = "albumCover"> 
+                    <a href="/track/{{ result.track_id }}" class = "songName">{{ result.title }}</a>
+                    <a href="/track/artist/{{ result.artist.artist_id }}"  class = "artistName">{{ result.artist.full_name }}</a>
+                    <a href="/track/album/{{ result.album.album_id }}" class = "albumName">{{ result.album.title }}</a>
+                    <span class = "duration">{{ result.track_duration_minutes }}</span>
+                    {% if show_similarities and result.track.__similarity %}
+                    <span class='similarity' title="{{ result.__similarity }}% match to your search">{{ result.__similarity }}%</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="searchPage_header">
+            <p>No results found.</p>
+        </div>
+        {% endif %}
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,961 @@
+:root {
+    --background-main: #1b1b22;
+    --background-secondary: #27272f;
+    --background-tertiary: #2f2f38;
+    --text-primary: #fff;
+    --text-secondary: #cbcbda;
+    --button-primary: #45454e;
+}
+
+::-webkit-scrollbar{
+    background-color: var(--background-secondary);
+  }
+::-webkit-scrollbar-thumb{
+    border-radius: 8px;
+    background-color: var(--button-primary);
+  }
+::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background-color: var(--background-tertiary);
+  }
+
+.songListing {
+    width:100%;
+    height:60px;
+    margin-bottom: 20px;
+    padding: 8px;
+    position:relative;
+    border-radius: 8px;
+    transition: all .08s;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.songListing:hover {
+    background-color: var(--background-secondary);
+    box-shadow: 0 0 30px #0f0f13;
+    transform: scale(1.01);
+}
+
+.albumCover {
+    height: 100%;
+    border-radius: 7px;
+}
+
+.songName {
+    color: var(--text-primary);
+    padding-left: 20px;
+    width:30%;
+    padding-right:30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.artistName {
+    width: 30%;
+    padding-right:30px;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: var(--text-secondary);
+}
+
+
+.albumName {
+    width: 30%;
+    padding-right:30px;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: var(--text-secondary);
+}
+
+.duration {
+    width:10%;
+}
+
+.similarity {
+    position: absolute;
+    bottom: 0.1em;
+    right: 0.2em;
+    font-size: 10pt;
+}
+
+body {
+    background: var(--background-main);
+    font-family: 'Lexend';
+    font-size: 22px;
+    color: var(--text-primary);
+    padding:0;
+    margin:0;
+}
+#home{
+    margin: 40px;
+}
+
+/* Pagination Bar */
+.paginationBar {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.paginationBar > span {
+    margin: 0 0.5em;
+}
+
+.paginationBar > button {
+    cursor: pointer;
+    background-color: var(--button-primary);
+    border: none;
+    margin:3px;
+    padding:5px;
+    border-radius: 2px;
+    color: var(--text-primary);
+    opacity: 0.8;
+    transition: 0.4s;
+}
+
+.paginationBar > button:hover {
+    opacity: 1;
+}
+
+.paginationBar > button:disabled {
+    cursor: default;
+    color: gray;
+    opacity: 0.8;
+}
+
+/* Sortbar */
+
+.sortBar {
+    width:100%;
+    height:60px;
+    font-size:17px;
+    padding-left:8px;
+    margin-bottom: 20px;
+    position:relative;
+    transition: all .08s;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    border-bottom: var(--text-secondary) 1px solid;
+    z-index: 3;
+    background-color: var(--background-main);
+}
+
+.sortBar a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.sortBar a:hover{
+    color: var(--text-primary);
+}
+
+.sortBar a.active{
+    color: var(--text-primary);
+}
+
+#title {
+    width:30%;
+}
+
+#artist {
+    padding-left: 83px;
+    width: 30%;
+}
+
+#album {
+    width: 30%;
+}
+
+#duration {
+    width:10%;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    width: 102%;
+    margin-left:-1%;
+    box-shadow: 0 12px 13px -2px var(--background-main);
+}
+  
+.sticky + .content {
+    padding-top: 60px;
+}
+
+
+
+/* header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:90px;
+    padding-bottom: 3px;
+    background-color: #16161d;
+    width:100%;
+}
+
+#logo {
+    height:60px;
+    padding-right: 5px;
+    border-radius: 8px;
+}
+
+#fourOhFor {
+    width:400px;
+}
+
+#brand {
+    /* border: 2px solid blue; */
+    margin: auto;
+    position: relative;
+    text-align: center;
+    width: 30%; 
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-left:26px;
+    overflow: hidden;
+    width:30%;
+    min-width:100px;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover:not(.active) {
+    color: var(--text-primary);
+  }
+  
+  .active {
+    color: var(--text-primary);
+  }
+  
+
+    #searchingBar {
+        font-family: Lexend;
+        width:40%;
+        min-width:50px;
+        float:right;
+        margin-right: 20px;
+        height: 40px;
+        border-radius: 8px;
+        border: 0;
+        /* border: 1px solid var(--text-secondary); */
+        padding: 10px;
+        color: var(--text-secondary);
+        background-color: var(--background-secondary);
+        opacity: 0.8;
+        font-size: 17px;
+    }
+
+    #searchingBar:focus {
+        outline: none;
+        opacity:1;
+        background-color: var(--background-secondary);
+    }
+
+    .advancedSearchButton {
+        cursor: pointer;
+        background-color: var(--background-tertiary);
+        border: none;
+        margin-right: 40px;
+        padding:10px;
+        border-radius: 8px;
+        color: var(--text-primary);
+        opacity: 0.8;
+        transition: 0.4s;
+        font-size: 17px;
+
+        float:right;
+        text-decoration: none;
+    }
+
+    .advancedSearchButton:hover {
+        opacity: 1;
+    }
+
+  #Search{
+    width:30%;
+  }
+
+  .logoLink {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+
+/* Track page */
+
+#white {
+    color: var(--text-primary);
+}
+
+#track {
+    margin: 40px 40px 0 40px;
+    background-color: var(--background-tertiary);
+    height:100%;
+    border-radius: 0 8px 0 8px;
+}
+#trackExtras {
+    border-radius: 0 0 8px 8px;
+    background-color: var(--background-secondary);
+    margin: 40px 40px 0 40px;
+    padding:40px 40px 40px 41px;
+    margin-top:0;
+}
+
+.playSong {
+    all: unset;
+    cursor: pointer;
+
+}
+
+#playSong{
+    margin: 0px;
+    padding: 0px;
+    white-space:nowrap;
+    width:auto;
+    overflow:visible;
+    height: 28px !important;
+    background-color: var(--background-primary);
+    border: none;
+}
+
+.playButton img, #playSong img {
+    height:100%!important;
+}
+
+#trackRecs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: auto;
+    padding-top:20px;
+    scrollbar-color: var(--background-tertiary) var(--background-secondary);
+    white-space: nowrap;
+}
+
+#trackRecs::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#trackRecs::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+    border-radius: 10px;
+}
+
+#trackRecs::-webkit-scrollbar-thumb {
+    background: var(--background-tertiary);
+    border-radius: 10px;
+}
+
+.recommendation {
+    margin:20px;
+    margin-left:0!important;
+    margin-right:25px!important;
+    padding:5px;
+    padding-top: 20px!important;
+    border-radius: 10px;
+    background-color: var(--background-main);
+    transition: 0.2s;
+
+}
+
+.recommendation:hover {
+    scale: 1.03;
+}
+
+.recommendation figcaption {
+    max-height: 30px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 20px;
+}
+
+#testing2{
+    text-decoration: none;
+}
+
+.recommendedImage {
+    height: 200px;
+    width:200px;
+    border-radius: 8px;
+}
+
+
+
+.track-header {
+    display: flex;
+    width:100%;
+    max-height:300px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.track-header-text {
+    display: block;
+    padding: 40px 40px 0 40px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.breaker {
+    padding: 0 10px 10px 10px;
+}
+
+
+#albumCoverTrackpage {
+    min-height: 300px;
+    border-radius: 8px 0 0 0;
+}
+.trackTitle {
+    color: var(--text-primary);
+    font-size: 50px;
+    word-break: break-all;
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    width:100%;
+    height:70px;
+}
+
+.trackAuthor {
+    color: var(--text-secondary);
+    padding-left:4px;
+    font-size: 20px;
+}
+
+.trackAuthor a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.track-header-info {
+    align-self: flex-end;
+    color: var(--text-secondary);
+    display: flex;
+    padding-left: 4px;
+    padding-top:70px;
+}
+
+.track-header-info a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.track-reviews {
+    margin: 40px;
+    background-color: var(--background-secondary);
+    height:100%;
+    border-radius: 8px;
+    padding:40px;
+}
+
+#ratingText{
+    resize: none;
+    font-family: 'Lexend';
+    padding:10px;
+    width:calc(100% - 20px);
+    background-color: var(--background-tertiary);
+    color: var(--text-primary);
+    border-radius: 8px;
+    opacity:0.8;
+    border: none;
+    font-size: 20px;
+}
+
+#ratingText:focus {
+    background-color: var(--background-tertiary);
+    opacity:1;
+}
+
+#reviewSubmit {
+    background-color: var(--button-primary);
+    color: var(--text-primary);
+    border: none;
+    font-family: 'Lexend';
+    border-radius: 8px;
+    padding: 10px;
+    width: calc(100%);
+    font-size: 20px;
+    margin: 20px 0 10px 0;
+    cursor: pointer;
+    transition: all .3s;
+    opacity: 0.6;
+}
+
+#reviewSubmit:hover{
+    background-color: var(--button-primary);
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+#recommendations {
+    font-size: 25px;
+}
+
+.reviewTitle{
+    color: var(--text-primary);
+    font-size: 25px;
+    padding-bottom: 30px;
+}
+
+.reviewWriting {
+    padding-top: 20px;
+}
+
+/* Genres */
+
+#genres {
+    margin: 40px 30px 40px 30px;
+}
+
+#genres h1 {
+    margin-left: 10px;
+}
+
+.allGenres{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    height:100%;
+    padding: 0;
+    margin: 0;
+}
+
+.genreListing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    background-color: var(--background-secondary);
+    margin-bottom: 30px!important;
+    margin-left:10px!important;
+    margin-right:10px!important;
+    margin: 35px 35px 35px 35px;
+    min-width: 300px;
+    width: 28%;
+    max-width: 615px;
+    height: 200;
+    border-radius: 8px;
+    transition: all .1s;
+}
+
+#headerLinkGenre {
+    width: 100%;
+}
+
+#headerLinkGenre .genreListing {
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.genreListing a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.genreListing:hover{
+    background-color: var(--background-secondary);
+    box-shadow: 0 0 30px #0f0f13;
+    transform: scale(1.03);
+}
+
+.genreListing img {
+    width: 70px;
+    border-radius: 8px;
+    margin-right: 10px;
+
+}
+
+.genreHeader{
+    background-color: var(--background-tertiary);
+    width:100%;
+    border-radius: 8px 8px 0 0;
+    padding:15px 0 0 0;
+    height: 80px;
+    color: var(--text-secondary)
+}
+
+.topTracks {
+    padding: 10px;
+    padding-top:15px!important;
+    padding-left: 15px!important;
+    cursor: grab;
+    overflow:scroll;
+    white-space: nowrap;
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.topTracksScroll {
+    width:100%;
+    float:left;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+
+
+.genreName{
+    color: var(--text-primary);
+    font-size: 30px;
+    margin-bottom: 0;
+    width:100%;
+    margin-top: 0;
+    padding-left:17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.genreName:hover{
+    color: var(--text-primary);
+}
+
+#genreCount{
+    padding-left:17px;
+}
+
+#genrePage{
+    padding: 40px;
+}
+#genrePage h2 {
+    color: var(--text-secondary);
+    font-size: 25px;
+    padding-top: 0;
+    margin-top: -10px;
+}
+
+
+
+/* Login/Register */
+
+
+
+.formwrapper {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    margin-top:10vh;
+    box-shadow: 0 0 30px var(--background-main);
+}
+
+.formwrapper2 {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    background-color: var(--background-secondary);
+    border-radius: 0 0 8px 8px;
+    margin-top:0vh;
+}
+
+.songInfoTop {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    background-color: var(--background-tertiary);
+    border-radius: 8px 8px 0 0;
+    margin-top:10vh;
+    display: flex;
+}
+
+#albumCoverReview {
+    border-radius: 8px 0 0 8px;
+    height:200px!important;
+}
+
+.review-header-text {
+    margin: 0 0 0 40px;
+    font-size: 30px;
+}
+
+.review-header-artist {
+    color: var(--text-secondary);
+    font-size: 15px;
+    padding-left: 40px;
+}
+
+.reviewTop{
+    display: inline-block;
+    flex-direction: column;
+    width:100%;
+    height:100%;
+    padding: 0;
+    margin: 0;
+}
+
+#topTextReview {
+    display:grid;
+    /* make each inner div on a new line */
+    flex-wrap: wrap;
+    /* align the inner divs to the center */
+    align-items: center;
+
+}
+
+#leaveReview {
+    margin: 0 auto;
+    margin-left:2px;
+    padding: 10px;
+    background-color: var(--button-primary);
+    border-radius: 8px;
+    margin-top:0vh;
+    color: var(--text-primary);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: 0.4s;
+}
+
+#leaveReview:hover {
+    opacity: 1;
+}
+
+.track-reviews-list-personal {
+    margin: 0 auto;
+    width: calc(100% - 35px);
+    border-radius: 8px;
+    padding:20px;
+    background-color: var(--background-main);
+    margin-top:40px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.title{
+    color: var(--text-primary);
+    text-align: center;
+    font-size: 45px;
+    margin-bottom: 0;
+    width:100%;
+    margin-top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom:40px;
+}
+
+#submit{
+    background-color: var(--button-primary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    font-size: 20px;
+    margin: 20px 0 10px 0;
+    cursor: pointer;
+    transition: all .3s;
+    opacity: 0.8;
+}
+
+#submit:hover{
+    background-color: var(--button-primary);
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+#user_name, #password{
+    background-color: var(--background-tertiary);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0 10px 15px;
+    width: calc(100% - 15px);
+    font-size: 20px;
+    margin-top: 20px;
+    cursor: text;
+    transition: all .1s;
+    margin-bottom: 30px;
+}
+
+#user_name:focus, #password:focus{
+    outline: 2px solid var(--text-primary);
+}
+
+.errors{
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 0;
+    width:100%;
+    margin-top: 0;
+    margin-bottom:30px;
+    text-align: center;
+    margin-left:-13px;
+}
+
+#regLink {
+    color: var(--text-secondary);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+#regLink a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+#loginForm {
+    margin-bottom:20px;
+}
+
+.ratingStarFilled {
+    color: gold;
+}
+
+
+/* Advanced search */
+
+.searchPage {
+    padding: 40px;
+}
+
+.searchPage_header {
+    background: var(--background-secondary);
+    border-radius: 8px;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+}
+
+.searchPage_header h1{
+    margin: 0 0 40px 0;
+}
+
+.searchPage__input {
+    background: var(--button-primary);
+    border: none;
+    border-radius: 8px;
+    width: 200px;
+    height:25px;
+    font-family: 'Lexend';
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    cursor: text;
+    transition: all .1s;
+    opacity:0.7;
+    color: var(--text-primary);
+}
+
+.searchPage__input:focus{
+    outline: 2px solid var(--text-primary);
+}
+
+.dropDwn {
+    background: var(--button-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    width: 200px;
+    font-family: 'Lexend';
+    margin: 0 0 20px 0;
+    cursor: text;
+    transition: all .1s;
+    opacity:0.7;
+    color: var(--text-primary);
+}
+
+#fuzSearch {
+    background: var(--button-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    width: 200px;
+    margin-right: 6px;
+    cursor: text;
+    transition: all .1s;
+    height:25px;
+    opacity:0.8;
+    color: var(--text-primary);
+}
+
+#searchSubmit {
+    background-color: var(--button-primary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 20px;
+    margin: 20px 0 10px 0;
+    cursor: pointer;
+    width:150px;
+    transition: all .3s;
+    opacity: 0.8;
+    font-family: 'Lexend';
+}
+
+#searchSubmit:hover{
+    opacity: 1;
+}
+
+.bottomSearch {
+    padding-top:20px;
+    display: inline;
+}
+
+.textInput {
+    background: var(--button-primary);
+    border: none;
+    border-radius: 8px;
+    width: 290px;
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    cursor: text;
+    transition: all .1s;
+    opacity:0.7;
+    color: var(--text-primary);
+    font-family: 'Lexend';
+}
+
+.resultSearch {
+    width:100%;
+}

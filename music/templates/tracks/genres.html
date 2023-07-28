@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id = "genres">
+    <h1>Genres</h1>
+
+    <div class="allGenres">
+    {% for genre, trackList in genres.items() %}
+        <div class = "genreListing">
+            <a href="genre/{{ genre.genre_id }}" id="headerLinkGenre">
+            <div class = "genreHeader">
+                <div class = "genreName">{{ genre.name }}</div>
+                <div id="genreCount">{{trackList|length}} Track(s)</div>
+            </div>
+            </a>
+
+            <div class = "topTracks">
+                <div class="topTracksScroll">
+                {% for track in trackList|shuffle %}
+                    {% if loop.index <= 7 %}
+                        <a href="/track/{{ track.track_id }}"> <img src = "{{ track.image_file }}" onerror="this.src='../static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class = "genreAlbumCover"> </a>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+    </div>
+
+
+</div>
+
+<script> // This is the script that allows scrolling of the songs in the genres page
+    const sliders = document.querySelectorAll('.topTracks');
+    sliders.forEach(slider => {
+      // if the slider is smaller than the container, don't add the scroll
+      if (slider.scrollWidth > slider.clientWidth){
+        let mouseDown = false;
+        let startX, scrollLeft;
+
+        slider.addEventListener('mousemove', (e) => {
+          e.preventDefault();
+          if(!mouseDown) { return; }
+          const x = e.pageX - slider.offsetLeft;
+          const scroll = x - startX;
+          slider.scrollLeft = scrollLeft - scroll;
+        });
+
+        let startDragging = function (e) {
+          mouseDown = true;
+          startX = e.pageX - slider.offsetLeft;
+          scrollLeft = slider.scrollLeft;
+        };
+        let stopDragging = function (event) {
+          mouseDown = false;
+        };
+        slider.addEventListener('mousedown', startDragging, false);
+        slider.addEventListener('mouseup', stopDragging, false);
+        slider.addEventListener('mouseleave', stopDragging, false);
+      }
+  });
+
+  </script>
+
+
+{% endblock %}

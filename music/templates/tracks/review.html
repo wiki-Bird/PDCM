@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+<div class="songInfoTop">
+    <div id="test1">
+        <img src = "{{ track.image_file }}" onerror="this.src='../../static/iconClear.png';this.onerror='';" alt = "Album Cover" id="albumCoverReview">
+    </div>
+    <div id="topTextReview">
+        <div class="review-header-text">{{ track.title }}</div>    
+        <div class="review-header-artist">{{ track.artist.full_name }}</div>        
+    </div>      
+</div>
+
+<div class="formwrapper2">
+    <form method="POST" action="{{ handler_url }}" id="commentForm">
+        {{form.article_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+        {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+        <span class="reviewTitle">Leave a review • Rating: </span>
+        <input type="range" min="1" max="5" value="3" step="1" id="reviewRating" name="rating">
+        <label id="reviewRatingLabel"></label>
+        <div class="reviewWriting">
+            <textarea id="ratingText" rows="5" name="review_text" placeholder="Write your review..." minlength="5" maxlength="10000" required></textarea>
+        </div>
+        
+        <input type="submit" id="reviewSubmit">
+
+    </form>
+    <script> // This script updates the star ratings for the rating slider
+        const label = document.querySelector('#reviewRatingLabel')
+
+        function handleInput(rating) {
+            const fullStars = new Array(rating).fill(`<span class="ratingStarFilled">★</span>`);
+            const emptyStars = new Array(5 - rating).fill(`<span class="ratingStarOutlined">☆</span>`)
+
+            label.innerHTML = fullStars.join(``) + emptyStars.join(``);   
+        }
+
+        document.querySelector('#reviewRating').oninput = (e) => handleInput(Number(e.target.value))
+        handleInput(3);
+    </script>
+</div>
+
+{% endblock %}

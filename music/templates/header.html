@@ -1,0 +1,54 @@
+<header id="header">
+
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/track/genres">Genres</a></li>
+        {% if 'user_name' in session %}
+        <li><a href="/track/discover">Discover</a></li>
+        <li><a href="/authentication/logout">Logout</a></li>
+        {% else %}
+        <li><a href="/authentication/login">Login</a></li>
+        {% endif %}
+      </ul>
+    
+    <div id="brand">
+        <img src="{{ url_for('static', filename='kirb.png')}}" alt="logo" id="logo" class="poglogo">
+        purple dancing cloud monkey wesbite
+        <a href="/">
+            <span class="logoLink"></span>
+        </a>
+    </div>
+
+    <div id = "Search"> 
+        <div class="advancedSearch">
+            <a href="/search" class="advancedSearchButton">Advanced Search</a>
+          </div>
+
+        <div class="searchBar">
+            <form id='searchForm'>   
+                <input type="search" placeholder="Default search..." id = "searchingBar" />  
+            </form>
+            <script> // This is the search bar script
+                const searchForm = document.querySelector('#searchForm');
+                const searchingBar = document.querySelector('#searchingBar');
+
+                searchingBar.value = new URLSearchParams(window.location.search).get('query');
+
+                searchForm.onsubmit = (e) => {
+                    e.preventDefault();
+                    const searchTerm = searchingBar.value;
+                    if (searchTerm.length < 2 && searchTerm.length > 0) return;
+
+                    if (searchTerm.length === 0) {
+                        window.location = `/`;
+                    } else {
+                        window.location = `/?query=${encodeURIComponent(searchTerm)}`
+                    }
+
+                }
+            </script>
+        </div>
+
+    </div>
+</header>
+  

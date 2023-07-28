@@ -1,0 +1,31 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id="genrePage">
+    {% if tracks|length >= 1 %}
+        <h1>Discover new songs</h1>
+        <h2>Good news {{ user_name }}! Based on your reviews, we found the following songs to recommend you:</h2>
+
+        <div class="sortBar">
+            <a href="#" id="title">Title</a>
+            <a href="#" id="artist">Artist</a>
+            <a href="#" id="album">Album</a>
+            <a href="#" id="duration">Duration</a>
+        </div>
+
+        {% for track in tracks %}
+            {% if loop.index <= 30 %}
+                <div class = "songListing">
+                    <img src = "{{ track.image_file }}" loading="lazy" onerror="this.src='/static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class = "albumCover"> 
+                    <a href="/track/{{ track.track_id }}" class = "songName">{{ track.title }}</a>
+                    <a href="#" class = "artistName">{{ track.artist.full_name }}</a>
+                    <a href="/track/album/{{ track.album.album_id }}" class = "albumName">{{ track.album.title }}</a>
+                    <span class = "duration">{{ track.track_duration_minutes }}</span>
+                </div>
+            {% endif %}
+        {% endfor %} 
+    {% else %}
+        <h1>Discover new songs</h1>
+        <h2>Sorry {{ user_name }}, we found no songs to recommend you. Try positively reviewing more tracks to get recommendations!</h2>
+    {% endif %}
+</div>
+{% endblock %}

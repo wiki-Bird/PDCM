@@ -1,0 +1,99 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id="home">
+    <h1>Songs</h1>
+
+    <div class="paginationBar" page="{{ page_number }}" num_pages="{{ num_pages }}" >
+    </div>
+
+    <div class="sortBar">
+        <!-- title -->
+        {% if sort == 'title0' %}
+            <a href="/title?reverse=true" id="title">Title ↓</a>
+        {% elif sort == 'title1' %}
+            <a href="/title?reverse=false" id="title">Title ↑</a>
+        {% else %}
+            <a href="/title" id="title">Title</a>
+        {% endif %}
+        <!-- artist -->
+        {% if sort == 'artist0' %}
+        <a href="/artist?reverse=true" id="artist">Artist ↓</a>
+        {% elif sort == 'artist1' %}
+            <a href="/artist?reverse=false" id="artist">Artist ↑</a>
+        {% else %}
+            <a href="/artist" id="artist">Artist</a>
+        {% endif %}
+        <!-- album -->
+        {% if sort == 'album0' %}
+        <a href="/album?reverse=true" id="album">Album ↓</a>
+        {% elif sort == 'album1' %}
+            <a href="/album?reverse=false" id="album">Album ↑</a>
+        {% else %}
+            <a href="/album" id="album">Album</a>
+        {% endif %}
+        <!-- duration -->
+        {% if sort == 'duration0' %}
+        <a href="/duration?reverse=true" id="duration">Duration ↓</a>
+        {% elif sort == 'duration1' %}
+            <a href="/duration?reverse=false" id="duration">Duration ↑</a>
+        {% else %}
+            <a href="/duration" id="duration">Duration</a>
+        {% endif %}
+    </div>
+
+    {% for track in tracks %}
+        <div class = "songListing">
+            <img src = "{{ track.image_file }}" loading="lazy" onerror="this.src='static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class = "albumCover"> 
+            <a href="/track/{{ track.track_id }}" class = "songName">{{ track.title }}</a>
+            <a href="/track/artist/{{ track.artist.artist_id }}"  class = "artistName">{{ track.artist.full_name }}</a>
+            <a href="/track/album/{{ track.album.album_id }}" class = "albumName">{{ track.album.title }}</a>
+            <span class = "duration">{{ track.track_duration_minutes }}</span>
+            {% if show_similarities and track.__similarity %}
+            <span class='similarity' title="{{ track.__similarity }}% match to your search">{{ track.__similarity }}%</span>
+            {% endif %}
+        </div>
+    {% endfor %} 
+    {% if show_similarities %}
+    <script> // colour gradient for similarity ratings in search results
+        function colourGradient(min, max, current, colourA, colourB, colourC) {
+            let colourProgression;
+            if (current >= max) colourProgression = 1;
+            else colourProgression = (current - min) / (max - min);
+            if (colourC) {
+                colourProgression *= 2;
+                if (colourProgression >= 1) {
+                    colourProgression -= 1;
+                    colourA = colourB;
+                    colourB = colourC;
+                }
+            }
+
+            const newRed = colourA.red + colourProgression * (colourB.red - colourA.red);
+            const newGreen = colourA.green + colourProgression * (colourB.green - colourA.green);
+            const newBlue = colourA.blue + colourProgression * (colourB.blue - colourA.blue);
+
+            const red = Math.floor(newRed);
+            const green = Math.floor(newGreen);
+            const blue = Math.floor(newBlue);
+
+            return { red, green, blue };
+        }
+
+        const lightCoral = { red: 240, green: 128, blue: 128 };
+        const lightYellow = { red: 255, green: 255, blue: 224 };
+        const lightGreen = { red: 144, green: 238, blue: 144 };
+
+        const similarityElements = document.querySelectorAll('.similarity');
+
+        similarityElements.forEach((e) => {
+            const similarity = Number(e.innerText.slice(0, -1));
+
+            const { red, green, blue } = colourGradient(0, 100, similarity, lightCoral, lightYellow, lightGreen);
+
+            e.style.color = `rgb(${red}, ${green}, ${blue})`;
+        })
+    </script>
+    {% endif %}
+    <div class="paginationBar" page="{{ page_number }}" num_pages="{{ num_pages }}" >
+</div>
+{% endblock %}

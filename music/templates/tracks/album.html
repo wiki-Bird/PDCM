@@ -1,0 +1,27 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id="genrePage">
+    <h1>{{ album.title }}</h1>
+    <h2>{{ total_results }} songs in this album.</h2>
+
+    <div class="paginationBar" page="{{ page_number }}" num_pages="{{ num_pages }}" ></div>
+
+    <div class="sortBar">
+        <a href="#" id="title">Title</a>
+        <a href="#" id="artist">Artist</a>
+        <a href="#" id="album">Album</a>
+        <a href="#" id="duration">Duration</a>
+    </div>
+
+    {% for track in tracks %}
+        <div class = "songListing">
+            <img src = "{{ track.image_file }}" loading="lazy" onerror="this.src='/static/defaultIcon.png';this.onerror='';" alt = "Album Cover" class = "albumCover"> 
+            <a href="/track/{{ track.track_id }}" class = "songName">{{ track.title }}</a>
+            <a href="/track/artist/{{ track.artist.artist_id }}"  class = "artistName">{{ track.artist.full_name }}</a>
+            <a href="#" class = "albumName">{{ track.album.title }}</a>
+            <span class = "duration">{{ track.track_duration_minutes }}</span>
+        </div>
+    {% endfor %} 
+    <div class="paginationBar" page="{{ page_number }}" num_pages="{{ num_pages }}" ></div>
+</div>
+{% endblock %}
